@@ -38,7 +38,7 @@ document.addEventListener( 'DOMContentLoaded', function () {
         // console.log(taskNode)
 
         // add listeners
-        addRemoveListener( taskNode );
+        addRemoveListener( taskNode, taskObj );
         addCompleteListener( taskNode );
 
         return taskNode;
@@ -50,18 +50,22 @@ document.addEventListener( 'DOMContentLoaded', function () {
             <div class="text">${text}</div>
             <button class="remove">remove</button>
             <button class="complete">complete</button>
+            <button class="color">change color</button>
         </div>`
     let createNodeFromString = string => {
         let divNode = document.createElement( 'div' );
         divNode.innerHTML = string;
         return divNode.firstChild;
     }
-    let addRemoveListener = node => {
+
+    let addRemoveListener = (node, task) => {
         node.querySelector( '.remove' ).addEventListener( 'click', event => {
             // event.target.parentNode.remove();
-            node.remove();
+            
+            deleteTaskToBackend(task.id).then(() => node.remove())
         } )
     }
+
     let addCompleteListener = node => {
         node.querySelector( '.complete' ).addEventListener( 'click', event => {
             node.classList.toggle( 'completed' )
@@ -84,6 +88,22 @@ document.addEventListener( 'DOMContentLoaded', function () {
 
             .catch( console.error )
     }
+
+    let deleteTaskToBackend = id =>{
+        //DELETE to /tasks
+        return fetch( baseApiUrl + '/tasks', {
+            method: 'DELETE',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify( { id } )
+        } )
+        .then( response => response.json() )
+        
+        .catch( console.error )
+    }
+
     // // add tasks
     let inputNode = document.querySelector( 'header input' );
 
@@ -111,8 +131,6 @@ document.addEventListener( 'DOMContentLoaded', function () {
                  addRemoveListener( newTaskNode );
                  addCompleteListener( newTaskNode );
             })
-
-
         }
     } )
 

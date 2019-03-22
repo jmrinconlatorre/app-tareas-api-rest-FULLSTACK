@@ -7,15 +7,14 @@
     "start:front": "cd frontend && npm start",
     "start:back": "cd backend && npm start",
     "start": "concurrently \"npm run start:front\" \"npm run start:back\"",
-
-    "postinstall":"npm run install:front && npm run install:back",
+    "postinstall": "npm run install:front && npm run install:back",
     "install:front": "cd frontend && npm install",
     "install:back": "cd backend && npm install"
-
   },
   "author": "jupegarnica",
   "license": "ISC",
   "dependencies": {
-    "concurrently": "^4.1.0"
+    "concurrently": "^4.1.0",
+    "express": "^4.16.4"
   }
 }
