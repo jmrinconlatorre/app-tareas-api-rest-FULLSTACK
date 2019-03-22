@@ -51,6 +51,7 @@ document.addEventListener( 'DOMContentLoaded', function () {
             <button class="remove">remove</button>
             <button class="complete">complete</button>
             <button class="color">change color</button>
+            <button class="change">change name</button>
         </div>`
     let createNodeFromString = string => {
         let divNode = document.createElement( 'div' );
@@ -82,9 +83,7 @@ document.addEventListener( 'DOMContentLoaded', function () {
                 },
                 body: JSON.stringify( { text } )
             } )
-            .then( console.log )
             .then( response => response.json() )
-            .then( console.log )
 
             .catch( console.error )
     }
